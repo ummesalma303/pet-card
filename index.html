@@ -79,57 +79,24 @@
   </header>
    <main>
 <section class=" my-8  px-8">
+  <button class="btn bg-red-300 ">sort by view</button>
 <!-- dynamic category button -->
-<div class="grid grid-cols-4 py-8">
-  <button class="btn flex items-center w-full border-[1px] border-solid border-[rgba(14, 122, 129, 0.15)] bg-transparent hover:bg-transparent category-btn"
-              >
-               <img class="w-8 h-8" src=""/>
-                <h2>click</h2>
-              </button>
+<div id="category-container" class="grid grid-cols-4 gap-5 py-8">
+  
 
 </div>
 
 <!-- spinner -->
-<div id="spinner" class="flex flex-col justify-center hidden">
+<div id="spinner" class="flex flex-col justify-center">
 <span class="mx-auto bg-violet-600 loading loading-infinity loading-lg"></span>
 
 </div>
 
-  <div id="pet-container" class="grid grid-cols-12 gap-8">
-    <div class=" col-span-full md:col-span-9 grid-cols-1 md:grid-cols-2 lg:grid grid-cols-4 bg-gray-400 p-4">
+  <div id="container" class="grid grid-cols-12 gap-8 ">
+    <div id="pet-container" class=" col-span-full md:col-span-9 grid-cols-1 md:grid-cols-2 grid lg:grid-cols-4 p-4">
         <!-- dynamic content -->
-        <div id="card" class=" card border-[1px] border-solid border-[rgba(19, 19, 19, 0.1)]">
-            <figure class=" p-5 pt-5">
-              <img
-                src=''
-                class="rounded-xl w-full aspect-video"
-              />
-            </figure>
-            <div class="card-body pt-0 rounded-b-xl ">
-              <h2 class="card-title text-xl font-bold"></h2>
-              <ul>
-                <li>
-                  <i class="fa-solid fa-border-all"></i> Bread: 
-                </li>
-                <li><i class="fa-regular fa-calendar"></i> Birth: </li>
-                <li><i class="fa-solid fa-mercury"></i> Gender: </li>
-                <li><i class="fa-solid fa-dollar-sign"></i> Price: </li>
-              </ul>
-              <hr class="py-2">
-              <div class="grid grid-cols-3 gap-2">
-              <button class="btn hover:text-primary hover:bg-white text-2xl border-[1px] border-solid border-[rgba(14, 122, 129, 0.15)]"><i class="fa-regular fa-thumbs-up"></i></button>
-                  
-                </button>
-                <button class=" btn rounded-lg border-[1px] border-solid text-primary font-bold border-[rgba(14, 122, 129, 0.15)] hover:bg-primary hover:text-white">
-                  Adopt
-                </button>
-                <button class="btn details-btn  rounded-lg border-[1px] border-solid text-primary font-bold border-[rgba(14, 122, 129, 0.15)] hover:bg-primary hover:text-white">
-                  Details
-                </button>
-              </div>
-             
-            </div>
-          </div>
+       
+
 
     </div>
     <div class="col-span-full md:col-span-3 grid grid-cols-2 bg-orange-600 p-4">
