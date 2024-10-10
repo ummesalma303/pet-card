@@ -78,8 +78,25 @@
       </div>
   </header>
    <main>
-<div id="pet-container" class="grid grid-cols-12 px-8 my-16 gap-8">
-    <div class=" col-span-full md:col-span-9 grid grid-cols-4 bg-gray-400">
+<section class=" my-8  px-8">
+<!-- dynamic category button -->
+<div class="grid grid-cols-4 py-8">
+  <button class="btn flex items-center w-full border-[1px] border-solid border-[rgba(14, 122, 129, 0.15)] bg-transparent hover:bg-transparent category-btn"
+              >
+               <img class="w-8 h-8" src=""/>
+                <h2>click</h2>
+              </button>
+
+</div>
+
+<!-- spinner -->
+<div id="spinner" class="flex flex-col justify-center hidden">
+<span class="mx-auto bg-violet-600 loading loading-infinity loading-lg"></span>
+
+</div>
+
+  <div id="pet-container" class="grid grid-cols-12 gap-8">
+    <div class=" col-span-full md:col-span-9 grid-cols-1 md:grid-cols-2 lg:grid grid-cols-4 bg-gray-400 p-4">
         <!-- dynamic content -->
         <div id="card" class=" card border-[1px] border-solid border-[rgba(19, 19, 19, 0.1)]">
             <figure class=" p-5 pt-5">
@@ -115,10 +132,13 @@
           </div>
 
     </div>
-    <div class="col-span-full md:col-span-3 grid grid-cols-2 bg-orange-600">
+    <div class="col-span-full md:col-span-3 grid grid-cols-2 bg-orange-600 p-4">
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe qui odit accusamus, repellendus commodi culpa distinctio veritatis provident molestias earum!</p>
     </div>
 </div>
+
+
+</section>
    </main>
    <footer class="footer bg-black text-white p-10">
     <aside>
@@ -160,5 +180,7 @@
       <a class="link link-hover">Cookie policy</a>
     </nav>
   </footer> 
+
+  <script src="./pet.js"></script>
 </body>
 </html>
