@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.13/dist/full.min.css" rel="stylesheet" type="text/css" />
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <button id="btn" class="btn btn-primary" onclick="handleClick()">click me</button>
+    <button id="btn" class="btn btn-primary" onclick="handleClick()">click me</button>
+    <!-- <script src="./test.js"></script> -->
+     <script>
+      function handleClick() {
+        console.log(89);
+        const btn= document.getElementById('btn');
+        btn.setAttribute('disabled',true);
+        btn.classList='cursor-not-allowed'
+      }
+   
+     </script>
+</body>
+</html>

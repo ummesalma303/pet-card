@@ -227,9 +227,8 @@ const displayDetailsModal = (data) => {
 const adoptCountdown = (id) => {
   const countdownContent = document.getElementById('countdown-content')
   const adoptId = document.getElementById(`btn-${id}`)
-  adoptId.classList.add('adopt-btn')
-  adoptId.setAttribute('disabled', true)
-  
+  adoptId.setAttribute('disabled', true,)
+  console.log(adoptId);
   let time = 3;
   const countdown = setInterval(() => {
     if (time<0) {
