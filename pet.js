@@ -19,7 +19,7 @@ const displayCategory = (data) => {
         const div = document.createElement('div')
 
         div.innerHTML = `
-         <button onclick="loadCategorySpinner('${category}')" class="btn flex items-center w-full border-[1px] border-solid border-[rgba(14, 122, 129, 0.15)] bg-transparent hover:bg-transparent category-btn"
+         <button id='btn-${category}' onclick="loadCategorySpinner('${category}')" class="btn flex items-center w-full border-[1px] border-solid border-[rgba(14, 122, 129, 0.15)] bg-transparent hover:bg-transparent category-btn"
               >
                <img class="w-8 h-8" src=${category_icon}/>
                 <h2>${category}</h2>
@@ -48,6 +48,16 @@ const loadCategorySpinner = (category) => {
   setTimeout(() => {
     loadCategoryPets(category);
   }, 2000);
+  removeActive(category)
+}
+
+const removeActive = (category) => {
+  const button = document.getElementsByClassName('category-btn')
+  for (const btn of button) {
+    btn.classList.remove('border-[1px]','border-red-400','border-solid')
+  }
+  document.getElementById(`btn-${category}`).classList.add('border-[1px]','border-red-400','border-solid')
+  
 }
 
 // load pets
@@ -133,7 +143,7 @@ const displayPets = (pets) => {
               <button onclick="markAsShow('${image}')" class="btn hover:text-primary hover:bg-white text-2xl border-[1px] border-solid border-[rgba(14, 122, 129, 0.15)]"><i class="fa-regular fa-thumbs-up"></i></button>
 
                 </button>
-                <button class=" btn rounded-lg border-[1px] border-solid text-primary font-bold border-[rgba(14, 122, 129, 0.15)] hover:bg-primary hover:text-white">
+                <button id="btn-${petId}" onclick="adoptCountdown(${petId})" class=" btn rounded-lg border-[1px] border-solid text-primary font-bold border-[rgba(14, 122, 129, 0.15)] hover:bg-primary hover:text-white ">
                   Adopt
                 </button>
                 <button id="details" onclick="loadDetails(${petId})" class="btn details-btn  rounded-lg border-[1px] border-solid text-primary font-bold border-[rgba(14, 122, 129, 0.15)] hover:bg-primary hover:text-white">
@@ -157,21 +167,6 @@ const markAsShow = (image) => {
   </div>
   `
 }
-
-/*
-{
-    "petId": 1,
-    "breed": "Golden Retriever",
-    "category": "Dog",
-    "date_of_birth": "2023-01-15",
-    "price": 1200,
-    "image": "https://i.ibb.co.com/p0w744T/pet-1.jpg",
-    "gender": "Male",
-    "pet_details": "This friendly male Golden Retriever is energetic and loyal, making him a perfect companion for families. Born on January 15, 2023, he enjoys playing outdoors and is especially great with children. Fully vaccinated, he's ready to join your family and bring endless joy. Priced at $1200, he offers love, loyalty, and a lively spirit for those seeking a playful yet gentle dog.",
-    "vaccinated_status": "Fully",
-    "pet_name": "Sunny"
-}
-     */
 
 const loadDetails = async(id) => {
   const res = await fetch(
@@ -226,6 +221,39 @@ const displayDetailsModal = (data) => {
 </dialog>
   `
   my_modal_1.showModal()
+}
+
+
+const adoptCountdown = (id) => {
+  const countdownContent = document.getElementById('countdown-content')
+  const adoptId = document.getElementById(`btn-${id}`)
+  adoptId.classList.add('adopt-btn')
+  adoptId.setAttribute('disabled', true)
+  
+  let time = 3;
+  const countdown = setInterval(() => {
+    if (time<0) {
+      clearInterval(countdown)
+      my_modal_5.close()
+    } else {
+
+      countdownContent.innerHTML = `
+      
+    <div class="text-center space-y-3">
+      <img class="m-auto w-24" src="./assets/handshake.png">
+    <h2 class="text-3xl font-bold">Congrates</h2>
+    <p>Adoption Process is Start For your Pet</p>
+      <h3 class="text-6xl font-bold">${time}</h3>
+    </div>
+      
+      `
+      
+      console.log(time);
+      my_modal_5.showModal()
+
+    }
+    time--
+  }, 1000);
 }
 
 spinner();

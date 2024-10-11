@@ -42,6 +42,12 @@
        },
      };
    </script>
+
+   <style>
+    .adopt-btn{
+      cursor: not-allowed;
+    }
+   </style>
  </head>
  <body class="lato">
   <header>
@@ -95,22 +101,38 @@
   <div id="container" class="grid grid-cols-12 gap-8 ">
     <div id="pet-container" class=" col-span-full md:col-span-9 grid-cols-1 md:grid-cols-2 grid lg:grid-cols-3 gap-6 p-4">
         <!-- dynamic content -->
-       
-
-        <!-- details modal -->
-<!-- Open the modal using ID.showModal() method -->
-<!-- <button class="btn" onclick="">open modal</button> -->
-<div id="modal-content">
-  
-</div>
 
 
 
     </div>
-    <div id="markAsShow" class="col-span-full md:col-span-3 grid grid-cols-2 gap-6 p-4 border-[1px] border-solid border-[rgba(19, 19, 19, 0.1)] rounded-lg">
+     
+    <div class="col-span-full md:col-span-3  p-4 border-[1px] border-solid border-[rgba(19, 19, 19, 0.1)] rounded-lg">
+      <div id="markAsShow" class="grid grid-cols-2 gap-6">
        
+      </div>
+    </div>
+   <!-- details modal -->
+<!-- Open the modal using ID.showModal() method -->
+<!-- <button class="btn" onclick="">open modal</button> -->
+<div id="modal-content">
 </div>
 
+<!-- countdown modal -->
+ <!-- Open the modal using ID.showModal() method -->
+<!-- <button class="btn" onclick="">open modal</button> -->
+
+<!-- Open the modal using ID.showModal() method -->
+<!-- <button class="btn" onclick="my_modal_5.showModal()">open modal</button> -->
+<!-- <div id="countdown-content"></div> -->
+
+<dialog id="my_modal_5" class="modal">
+  <div class="modal-box">
+    <div id="countdown-content"></div>
+  </div>
+</dialog>
+    
+  
+<!-- </div> -->
 
 </section>
 
