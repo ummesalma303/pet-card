@@ -19,7 +19,7 @@ const displayCategory = (data) => {
         const div = document.createElement('div')
 
         div.innerHTML = `
-         <button onclick="loadCategoryPets('${category}')" class="btn flex items-center w-full border-[1px] border-solid border-[rgba(14, 122, 129, 0.15)] bg-transparent hover:bg-transparent category-btn"
+         <button onclick="loadCategorySpinner('${category}')" class="btn flex items-center w-full border-[1px] border-solid border-[rgba(14, 122, 129, 0.15)] bg-transparent hover:bg-transparent category-btn"
               >
                <img class="w-8 h-8" src=${category_icon}/>
                 <h2>${category}</h2>
@@ -32,11 +32,22 @@ const displayCategory = (data) => {
 
 // load category pets
 const loadCategoryPets = async (category) => {
+  document.getElementById("spinner").classList.add("hidden");
+  document.getElementById("container").classList.remove("hidden");
     const res = await fetch(
       `https://openapi.programming-hero.com/api/peddy/category/${category}`
     );
-    const data = await res.json();
+  const data = await res.json();
     displayPets(data.data)
+}
+// load category spinner
+const loadCategorySpinner = (category) => {
+  document.getElementById("container").classList.add("hidden");
+  document.getElementById("pet-container").innerHTML=''
+  document.getElementById("spinner").classList.remove("hidden");
+  setTimeout(() => {
+    loadCategoryPets(category);
+  }, 2000);
 }
 
 // load pets
@@ -71,10 +82,9 @@ const spinner = () => {
 } */
 
 const displayPets = (pets) => {
-console.log(pets);
   const petContainer = document.getElementById("pet-container");
-  const container = document.getElementById('container');
-  petContainer.innerHTML = '';
+  // petContainer.innerHTML = '';
+
   if (pets.length === 0) {
     petContainer.classList.remove('grid')
     petContainer.innerHTML = `
@@ -96,12 +106,12 @@ console.log(pets);
     
   }
     pets.forEach((pet) => {
-      console.log(pet);
-    const { breed, date_of_birth, price, image, gender, pet_name } =
+      // console.log(pet);
+    const {petId, breed, date_of_birth, price, image, gender, pet_name } =
       pet;
     const div = document.createElement("div");
     div.innerHTML = `
-         <div id="card" class="mb-4 card border-[1px] border-solid border-[rgba(19, 19, 19, 0.1)]">
+         <div id="card" class="card border-[1px] border-solid border-[rgba(19, 19, 19, 0.1)]">
             <figure class=" p-5 pt-5">
               <img
                 src=${image}
@@ -112,21 +122,21 @@ console.log(pets);
               <h2 class="card-title text-xl font-bold">${pet_name}</h2>
               <ul>
                 <li>
-                  <i class="fa-solid fa-border-all"></i> Bread: ${breed}
+                  <i class="fa-solid fa-border-all"></i> Bread: ${breed?breed:"N/A"}
                 </li>
-                <li><i class="fa-regular fa-calendar"></i> Birth: ${date_of_birth} </li>
-                <li><i class="fa-solid fa-mercury"></i> Gender: ${gender}</li>
-                <li><i class="fa-solid fa-dollar-sign"></i> Price: ${price}</li>
+                <li><i class="fa-regular fa-calendar"></i> Birth: ${date_of_birth?date_of_birth:"N/A"} </li>
+                <li><i class="fa-solid fa-mercury"></i> Gender: ${gender?gender:'N/A'}</li>
+                <li><i class="fa-solid fa-dollar-sign"></i> Price: ${price?price:"N/A"}</li>
               </ul>
               <hr class="py-2">
               <div class="grid grid-cols-3 gap-2">
-              <button class="btn hover:text-primary hover:bg-white text-2xl border-[1px] border-solid border-[rgba(14, 122, 129, 0.15)]"><i class="fa-regular fa-thumbs-up"></i></button>
+              <button onclick="markAsShow('${image}')" class="btn hover:text-primary hover:bg-white text-2xl border-[1px] border-solid border-[rgba(14, 122, 129, 0.15)]"><i class="fa-regular fa-thumbs-up"></i></button>
 
                 </button>
                 <button class=" btn rounded-lg border-[1px] border-solid text-primary font-bold border-[rgba(14, 122, 129, 0.15)] hover:bg-primary hover:text-white">
                   Adopt
                 </button>
-                <button class="btn details-btn  rounded-lg border-[1px] border-solid text-primary font-bold border-[rgba(14, 122, 129, 0.15)] hover:bg-primary hover:text-white">
+                <button id="details" onclick="loadDetails(${petId})" class="btn details-btn  rounded-lg border-[1px] border-solid text-primary font-bold border-[rgba(14, 122, 129, 0.15)] hover:bg-primary hover:text-white">
                   Details
                 </button>
               </div>
@@ -138,6 +148,85 @@ console.log(pets);
     petContainer.appendChild(div);
   });
 };
+// mark as show
+const markAsShow = (image) => {
+  const markAsShow = document.getElementById('markAsShow');
+  markAsShow.innerHTML += `
+  <div>
+  <img class="rounded-lg" src=${image}/>
+  </div>
+  `
+}
+
+/*
+{
+    "petId": 1,
+    "breed": "Golden Retriever",
+    "category": "Dog",
+    "date_of_birth": "2023-01-15",
+    "price": 1200,
+    "image": "https://i.ibb.co.com/p0w744T/pet-1.jpg",
+    "gender": "Male",
+    "pet_details": "This friendly male Golden Retriever is energetic and loyal, making him a perfect companion for families. Born on January 15, 2023, he enjoys playing outdoors and is especially great with children. Fully vaccinated, he's ready to join your family and bring endless joy. Priced at $1200, he offers love, loyalty, and a lively spirit for those seeking a playful yet gentle dog.",
+    "vaccinated_status": "Fully",
+    "pet_name": "Sunny"
+}
+     */
+
+const loadDetails = async(id) => {
+  const res = await fetch(
+    ` https://openapi.programming-hero.com/api/peddy/pet/${id}`
+  );
+  const data = await res.json()
+  displayDetailsModal(data.petData);
+  // (data.categories);
+}
+const displayDetailsModal = (data) => {
+  console.log(data);
+  const details = document.getElementById('modal-content');
+  const {breed, date_of_birth, price, image, gender,pet_details,vaccinated_status, pet_name } =
+  data;
+  details.innerHTML = `
+  <dialog id="my_modal_1" class="modal">
+  <div class="modal-box">
+    
+
+  <div id="card" class="card border-[1px] border-solid border-[rgba(19, 19, 19, 0.1)]">
+            <figure class=" p-5 pt-5">
+              <img
+                src=${image}
+                class="rounded-xl w-full aspect-video"
+              />
+            </figure>
+            <div class="card-body pt-0 rounded-b-xl ">
+              <h2 class="card-title text-xl font-bold">${pet_name}</h2>
+              <ul class="grid grid-cols-2">
+                <li>
+                  <i class="fa-solid fa-border-all"></i> Bread: ${breed?breed:"N/A"}
+                </li>
+                <li><i class="fa-regular fa-calendar"></i> Birth: ${date_of_birth?date_of_birth:"N/A"} </li>
+                <li><i class="fa-solid fa-mercury"></i> Gender: ${gender?gender:'N/A'}</li>
+                <li><i class="fa-solid fa-mercury"></i> Vaccinated Status: ${vaccinated_status?vaccinated_status:"N/A"}</li>
+                <li><i class="fa-solid fa-dollar-sign"></i> Price: ${price?price:"N/A"}</li>
+              </ul>
+             <p>${pet_details}</p>
+
+            </div>
+          </div>
+
+
+  
+    <div class="modal-action">
+      <form method="dialog">
+        <!-- if there is a button in form, it will close the modal -->
+        <button class="btn">Close</button>
+      </form>
+    </div>
+  </div>
+</dialog>
+  `
+  my_modal_1.showModal()
+}
 
 spinner();
 loadCategory();
