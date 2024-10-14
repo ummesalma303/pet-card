@@ -62,12 +62,15 @@ const removeActive = (category) => {
 
 // load pets
 
-const loadPetsData = async () => {
+const loadPetsData = async (status) => {
   document.getElementById("spinner").classList.add("hidden");
   document.getElementById("container").classList.remove("hidden");
   const response = await fetch("https://openapi.programming-hero.com/api/peddy/pets");
   const data = await response.json();
-  displayPets(data.pets);
+  if (status) {
+    data.pets.sort((a,b)=> b.price-a.price)
+    displayPets(data.pets);
+  }
 };
 
 const spinner = () => {
@@ -143,7 +146,7 @@ const displayPets = (pets) => {
               <button onclick="markAsShow('${image}')" class="btn hover:text-primary hover:bg-white text-2xl border-[1px] border-solid border-[rgba(14, 122, 129, 0.15)]"><i class="fa-regular fa-thumbs-up"></i></button>
 
                 </button>
-                <button id="btn-${petId}" onclick="adoptCountdown(${petId})" class=" btn rounded-lg border-[1px] border-solid text-primary font-bold border-[rgba(14, 122, 129, 0.15)] hover:bg-primary hover:text-white ">
+                <button id="btn-${petId}" onclick="adoptCountdown(${petId})" class=" btn rounded-lg border-[1px] border-solid text-primary font-bold border-[rgba(14, 122, 129, 0.15)] hover:bg-primary hover:text-white adopt">
                   Adopt
                 </button>
                 <button id="details" onclick="loadDetails(${petId})" class="btn details-btn  rounded-lg border-[1px] border-solid text-primary font-bold border-[rgba(14, 122, 129, 0.15)] hover:bg-primary hover:text-white">
@@ -223,12 +226,17 @@ const displayDetailsModal = (data) => {
   my_modal_1.showModal()
 }
 
+// function cursor() {
+  
+//   console.log();
+// }
 
 const adoptCountdown = (id) => {
   const countdownContent = document.getElementById('countdown-content')
   const adoptId = document.getElementById(`btn-${id}`)
   adoptId.setAttribute('disabled', true,)
-  console.log(adoptId);
+  console.log(cursor);
+  
   let time = 3;
   const countdown = setInterval(() => {
     if (time<0) {
@@ -253,6 +261,10 @@ const adoptCountdown = (id) => {
     }
     time--
   }, 1000);
+}
+
+const sort = () => {
+  loadPetsData(true)
 }
 
 spinner();
